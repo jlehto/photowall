@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Title from './Title';
 import Photowall from './PhotoWall';
 
-const posts = [{
+const initPosts = [{
     id: "0",
     description: "beautiful landscape",
     imageLink: "https://image.jimcdn.com/app/cms/image/transf/none/path/sa6549607c78f5c11/image/i4eeacaa2dbf12d6d/version/1490299332/most-beautiful-landscapes-in-europe-lofoten-european-best-destinations-copyright-iakov-kalinin.jpg" +
@@ -19,11 +19,29 @@ const posts = [{
 }];
 
 export default class Main extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            posts: initPosts
+        };
+
+        this.removePost = this.removePost.bind(this);
+    }
+
+    removePost(postRemoved) {
+        this.setState(
+            state => ({
+                posts: state.posts.filter(post => post !== postRemoved)
+            })
+        );
+    }
+
     render() {
         return (
             <div>
                 <Title title="Photowall"/>
-                <Photowall posts={posts}/>
+                <Photowall posts= {this.state.posts} onRemovePost={this.removePost}/>
             </div>
         );
     }    
