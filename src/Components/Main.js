@@ -18,26 +18,51 @@ const initPosts = [{
     imageLink: "https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2017/08/24/104670887-VacationExplainsTHUMBWEB.1910x1000.jpg"
 }];
 
+//simulation of a database fetch
+const getPosts = () => {
+    return initPosts;
+}
+
+const fetchPosts = () => new Promise(
+    (resolve) => setTimeout(() => { resolve(initPosts);}, 1500)
+);
+
+
 export default class Main extends Component {
 
     constructor() {
         super();
         this.state = {
-            posts: initPosts
+            posts: []
         };
 
         this.removePost = this.removePost.bind(this);
     }
 
+    async componentDidMount() {
+        const data = await fetchPosts();
+        //const data = getPosts();
+        this.setState({
+            posts: data
+        });
+    }
+
     removePost(postRemoved) {
         this.setState(
-            state => ({
+            state => ({ //<- we need parentheses to tell this is an object literal, not a block
                 posts: state.posts.filter(post => post !== postRemoved)
             })
         );
     }
 
     render() {
+        if (!this.state.posts.length) {
+            return (
+              <div>
+                <img src="../img/spinner.gif" alt="spinner" className='center' />
+              </div>
+            )
+        }
         return (
             <div>
                 <Title title="Photowall"/>
