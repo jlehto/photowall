@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Title from './Title';
 import Photowall from './PhotoWall';
+import AddPhoto from './AddPhoto'
 
 const initPosts = [{
     id: "0",
@@ -18,13 +19,13 @@ const initPosts = [{
     imageLink: "https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2017/08/24/104670887-VacationExplainsTHUMBWEB.1910x1000.jpg"
 }];
 
-//simulation of a database fetch
 const getPosts = () => {
     return initPosts;
 }
 
+//simulation of a database fetch
 const fetchPosts = () => new Promise(
-    (resolve) => setTimeout(() => { resolve(initPosts);}, 1500)
+    (resolve) => setTimeout(() => { resolve(initPosts);}, 500)
 );
 
 
@@ -33,17 +34,20 @@ export default class Main extends Component {
     constructor() {
         super();
         this.state = {
-            posts: []
+            posts: [],
+            screen: 'loading'
         };
 
         this.removePost = this.removePost.bind(this);
+        this.gotoAddPhotoPage = this.gotoAddPhotoPage.bind(this);
     }
 
     async componentDidMount() {
         const data = await fetchPosts();
         //const data = getPosts();
         this.setState({
-            posts: data
+            posts: data,
+            screen: 'show'
         });
     }
 
@@ -55,19 +59,39 @@ export default class Main extends Component {
         );
     }
 
+    gotoAddPhotoPage() {
+        this.setState({
+            screen: 'add'
+        });
+    }
+
     render() {
-        if (!this.state.posts.length) {
-            return (
-              <div>
-                <img src="../img/spinner.gif" alt="spinner" className='center' />
-              </div>
-            )
-        }
+        
         return (
-            <div>
-                <Title title="Photowall"/>
-                <Photowall posts= {this.state.posts} onRemovePost={this.removePost}/>
-            </div>
+            <> 
+                {
+                    this.state.screen === 'loading' &&
+                    <img src="../img/spinner.gif" alt="spinner" className='center' />
+                }
+
+                {
+                    this.state.screen ==='show' &&
+                    <>
+                        <Title title="Photowall"/>
+                        <Photowall posts= {this.state.posts} 
+                            onClickAddButton = {this.gotoAddPhotoPage}
+                            onRemovePost={this.removePost}
+                        />
+                    </>
+                }
+
+                {
+                    this.state.screen ==='add' &&
+                    <>
+                        <AddPhoto/>
+                    </>
+                }
+            </>
         );
     }    
 }
