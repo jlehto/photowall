@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Title from './Title';
 import Photowall from './PhotoWall';
 import AddPhoto from './AddPhoto'
+import {Route} from 'react-router-dom'
 
 const initPosts = [{
     id: "0",
@@ -19,9 +20,11 @@ const initPosts = [{
     imageLink: "https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2017/08/24/104670887-VacationExplainsTHUMBWEB.1910x1000.jpg"
 }];
 
+/*
 const getPosts = () => {
     return initPosts;
 }
+*/
 
 //simulation of a database fetch
 const fetchPosts = () => new Promise(
@@ -35,11 +38,10 @@ export default class Main extends Component {
         super();
         this.state = {
             posts: [],
-            screen: 'loading'
+            loading: true
         };
 
         this.removePost = this.removePost.bind(this);
-        this.gotoAddPhotoPage = this.gotoAddPhotoPage.bind(this);
     }
 
     async componentDidMount() {
@@ -47,7 +49,7 @@ export default class Main extends Component {
         //const data = getPosts();
         this.setState({
             posts: data,
-            screen: 'show'
+            loading: false
         });
     }
 
@@ -59,23 +61,17 @@ export default class Main extends Component {
         );
     }
 
-    gotoAddPhotoPage() {
-        this.setState({
-            screen: 'add'
-        });
-    }
-
     render() {
-        
+
+        if (this.state.loading) {
+            return (
+                <img src="../img/spinner.gif" alt="spinner" className='center' />
+            )
+        }
+                
         return (
             <> 
-                {
-                    this.state.screen === 'loading' &&
-                    <img src="../img/spinner.gif" alt="spinner" className='center' />
-                }
-
-                {
-                    this.state.screen ==='show' &&
+                <Route exact path='/' render={() => (
                     <>
                         <Title title="Photowall"/>
                         <Photowall posts= {this.state.posts} 
@@ -83,14 +79,9 @@ export default class Main extends Component {
                             onRemovePost={this.removePost}
                         />
                     </>
-                }
+                )} />
 
-                {
-                    this.state.screen ==='add' &&
-                    <>
-                        <AddPhoto/>
-                    </>
-                }
+                <Route path = '/AddPhoto' component= {AddPhoto} />
             </>
         );
     }    
