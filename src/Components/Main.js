@@ -61,6 +61,15 @@ export default class Main extends Component {
         );
     }
 
+    addPost(postAdded) {
+        this.setState(
+            state => ({
+                posts: state.posts.concat([postAdded])
+            }) 
+        );
+        console.log(this.state.posts)
+    }
+
     render() {
 
         if (this.state.loading) {
@@ -80,7 +89,14 @@ export default class Main extends Component {
                     </>
                 )} />
 
-                <Route path = '/AddPhoto' component= {AddPhoto} />
+
+                <Route path = '/AddPhoto' render= {({history}) => (
+                    <AddPhoto onAddPhoto = { (post) => {
+                        this.addPost(post);
+                        history.push('/');
+                   }} />
+                )} />
+                
             </>
         );
     }    

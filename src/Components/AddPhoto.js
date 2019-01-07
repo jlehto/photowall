@@ -1,10 +1,38 @@
 import React, {Component} from 'react';
 
 class AddPhoto extends Component {
+
+    constructor() {
+        super();
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(evt) {
+        evt.preventDefault();
+        const link = evt.target.elements.link.value;
+        const description = evt.target.elements.description.value;
+        const post = {
+            id : 100,
+            description : description,
+            imageLink: link
+        }
+            
+        if (link && description) {
+            this.props.onAddPhoto(post);
+        }
+    }
+
     render() {
         return (
             <>
-                <h2>Add Photo page</h2>
+                <h1>Add Photo</h1>
+                <div className='form'>
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="text" placeholder="link" name="link"/>
+                        <input type="text" placeholder="description" name="description" />
+                        <button>Post</button>
+                    </form>
+                </div>    
             </>
         );
     }
