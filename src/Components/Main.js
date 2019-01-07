@@ -75,7 +75,6 @@ export default class Main extends Component {
                     <>
                         <Title title="Photowall"/>
                         <Photowall posts= {this.state.posts} 
-                            onClickAddButton = {this.gotoAddPhotoPage}
                             onRemovePost={this.removePost}
                         />
                     </>
