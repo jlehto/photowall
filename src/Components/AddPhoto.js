@@ -12,7 +12,7 @@ class AddPhoto extends Component {
         const link = evt.target.elements.link.value;
         const description = evt.target.elements.description.value;
         const post = {
-            id : 100,
+            id : Number(new Date()),
             description : description,
             imageLink: link
         }

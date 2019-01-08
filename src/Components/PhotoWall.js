@@ -8,9 +8,12 @@ const PhotoWall = (props) =>
                <Link className='addIcon' to='/AddPhoto'/>
               
                 <div className='photo-grid'>
-                    { props.posts.map((post,idx) => 
-                        <Photo key={idx} post={post} onRemovePost={props.onRemovePost}/>)
-                    }
+                    {props.posts
+                        .sort((x,y) => y.id - x.id) //highest first
+                        .map(post => 
+                            <Photo key={post.id} post={post}
+                             onRemovePost={props.onRemovePost}/>)
+                        }
                 </div>  
             </>  
         
