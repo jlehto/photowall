@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import posts from '../data/posts'
 
 const postReducer = function posts(state = posts, action) {
