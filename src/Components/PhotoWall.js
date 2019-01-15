@@ -11,8 +11,7 @@ const PhotoWall = (props) =>
                     {props.posts
                         .sort((x,y) => y.id - x.id) //highest first
                         .map(post => 
-                            <Photo key={post.id} post={post}
-                             onRemovePost={props.onRemovePost}/>)
+                            <Photo key={post.id} post={post} {...props}/>)
                         }
                 </div>  
             </>  
@@ -20,7 +19,6 @@ const PhotoWall = (props) =>
 
 PhotoWall.propTypes = {
     posts: PropTypes.array.isRequired,
-    onRemovePost: PropTypes.func.isRequired
 };
 
 export default PhotoWall
