@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Title from './Title';
 import Photowall from './PhotoWall';
-//import AddPhoto from './AddPhoto'
-import { Route } from 'react-router-dom';
+import AddPhoto from './AddPhoto'
+import { Route, Link } from 'react-router-dom';
+
 
 
 //sample imageLink
@@ -28,29 +28,30 @@ export default class Main extends Component {
     */
 
     componentDidMount() {
-       // this.props.dispatch(removePost(1))
+        // this.props.dispatch(removePost(1))
     }
-    
+
     render() {
+        console.log(this.props.AddPhoto)
         return (
             <>
+            <h1>
+                <Link to='/'>Photowall</Link>
+            </h1>
             <Route exact path='/' render={() => (
                 <>
-                <Title title="Photowall" />
+
                 {/*pass all the props at one go using spread*/}
-               <Photowall { ...this.props}/>
-               
+                <Photowall { ...this.props} />
+
                 </>
             )} />
 
-            {/*
-            <Route path='/AddPhoto' render={({ history }) => (
-                <AddPhoto onAddPhoto={(post) => {
-                    this.addPost(post);
-                    history.push('/');
-                }} />
-            )} />
-            */}
+            {
+                <Route path='/AddPhoto' render={({ history }) => (
+                    <AddPhoto {...this.props} />
+                )} />
+            }
             </>
         );
     }

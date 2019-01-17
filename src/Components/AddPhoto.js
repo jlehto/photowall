@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 class AddPhoto extends Component {
 
@@ -8,31 +8,32 @@ class AddPhoto extends Component {
     }
 
     handleSubmit(evt) {
+        console.log(this.props)
         evt.preventDefault();
         const link = evt.target.elements.link.value;
         const description = evt.target.elements.description.value;
         const post = {
-            id : Number(new Date()),
-            description : description,
+            id: Number(new Date()),
+            description: description,
             imageLink: link
         }
-            
+
         if (link && description) {
-            this.props.onAddPhoto(post);
+            this.props.addPost(post);
+            this.props.history.push('/')
         }
     }
 
     render() {
         return (
             <>
-                <h1>Add Photo</h1>
-                <div className='form'>
-                    <form onSubmit={this.handleSubmit}>
-                        <input type="text" placeholder="link" name="link"/>
-                        <input type="text" placeholder="description" name="description" />
-                        <button>Post</button>
-                    </form>
-                </div>    
+            <div className='form'>
+                <form onSubmit={this.handleSubmit}>
+                    <input type="text" placeholder="link" name="link" />
+                    <input type="text" placeholder="description" name="description" />
+                    <button>Post</button>
+                </form>
+            </div>
             </>
         );
     }
