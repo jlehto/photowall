@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom'
 
 const Photo = (props) => {
     const post = props.post;
 
     return (
         <figure className='figure'>
-            <img src={post.imageLink} alt={post.description} className='photo'/>
+            <Link to={`/single/${post.id}`}>
+                <img src={post.imageLink} alt={post.description} className='photo'/>
+            </Link>
             <figcaption>
                 <p>{post.description}</p>
             </figcaption>

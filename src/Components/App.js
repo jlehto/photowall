@@ -1,9 +1,9 @@
 import Main from './Main'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router';
-//import * as actions from '../redux/actions'
+//
 import { removePost, addPost } from '../redux/actions'
-//import { bindActionCreators } from 'redux'
+
 
 //a pure function that returns an object with single key 'posts'
 const mapStateToProps = state => ({
@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
 
 /*
 //Won't work!
+import * as actions from '../redux/actions'
 const mapDispatchToProps = {
     actions
 }
@@ -20,6 +21,7 @@ const mapDispatchToProps = {
 
 /*
 //Will work!
+import { bindActionCreators } from 'redux'
 const mapDispatchToProps = dispatch =>
     bindActionCreators(actions,dispatch)
 */
