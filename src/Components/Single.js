@@ -1,6 +1,7 @@
 //'React' must be in scope when using JSX 
 import React from 'react'
 import Photo from './Photo'
+import Comments from './Comments'
 
 const Single = (props) => {
 
@@ -10,6 +11,7 @@ const Single = (props) => {
     return (
         <div className='single-photo'>
             <Photo post={photo}/>
+            <Comments/>
         </div>
     )
 }
